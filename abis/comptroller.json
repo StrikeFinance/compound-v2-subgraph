@@ -255,7 +255,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -286,7 +286,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -384,7 +384,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -411,11 +411,11 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cTokenBorrowed",
+        "name": "sTokenBorrowed",
         "type": "address"
       },
       {
-        "name": "cTokenCollateral",
+        "name": "sTokenCollateral",
         "type": "address"
       },
       {
@@ -461,7 +461,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -509,7 +509,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -556,7 +556,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -607,11 +607,11 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cTokenBorrowed",
+        "name": "sTokenBorrowed",
         "type": "address"
       },
       {
-        "name": "cTokenCollateral",
+        "name": "sTokenCollateral",
         "type": "address"
       },
       {
@@ -643,7 +643,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -670,11 +670,11 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cTokenCollateral",
+        "name": "sTokenCollateral",
         "type": "address"
       },
       {
-        "name": "cTokenBorrowed",
+        "name": "sTokenBorrowed",
         "type": "address"
       },
       {
@@ -744,7 +744,7 @@
         "type": "address"
       },
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       }
     ],
@@ -779,7 +779,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       }
     ],
@@ -834,7 +834,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -866,7 +866,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cTokens",
+        "name": "sTokens",
         "type": "address[]"
       }
     ],
@@ -886,11 +886,11 @@
     "constant": true,
     "inputs": [
       {
-        "name": "cTokenBorrowed",
+        "name": "sTokenBorrowed",
         "type": "address"
       },
       {
-        "name": "cTokenCollateral",
+        "name": "sTokenCollateral",
         "type": "address"
       },
       {
@@ -918,11 +918,11 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cTokenCollateral",
+        "name": "sTokenCollateral",
         "type": "address"
       },
       {
-        "name": "cTokenBorrowed",
+        "name": "sTokenBorrowed",
         "type": "address"
       },
       {
@@ -974,7 +974,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -1041,7 +1041,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -1080,7 +1080,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -1108,7 +1108,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cTokenAddress",
+        "name": "sTokenAddress",
         "type": "address"
       }
     ],
@@ -1151,7 +1151,7 @@
     "inputs": [
       {
         "indexed": false,
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       }
     ],
@@ -1164,7 +1164,7 @@
     "inputs": [
       {
         "indexed": false,
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -1182,7 +1182,7 @@
     "inputs": [
       {
         "indexed": false,
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {
@@ -1218,7 +1218,7 @@
     "inputs": [
       {
         "indexed": false,
-        "name": "cToken",
+        "name": "sToken",
         "type": "address"
       },
       {

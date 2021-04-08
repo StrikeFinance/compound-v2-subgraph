@@ -2,7 +2,7 @@
 
 // For each division by 10, add one to exponent to truncate one significant figure
 import { BigDecimal, BigInt, Bytes, Address } from '@graphprotocol/graph-ts'
-import { AccountCToken, Account, AccountCTokenTransaction } from '../types/schema'
+import { AccountSToken, Account, AccountSTokenTransaction } from '../types/schema'
 
 export function exponentToBigDecimal(decimals: i32): BigDecimal {
   let bd = BigDecimal.fromString('1')
@@ -13,31 +13,31 @@ export function exponentToBigDecimal(decimals: i32): BigDecimal {
 }
 
 export let mantissaFactor = 18
-export let cTokenDecimals = 8
+export let sTokenDecimals = 8
 export let mantissaFactorBD: BigDecimal = exponentToBigDecimal(18)
-export let cTokenDecimalsBD: BigDecimal = exponentToBigDecimal(8)
+export let sTokenDecimalsBD: BigDecimal = exponentToBigDecimal(8)
 export let zeroBD = BigDecimal.fromString('0')
 
-export function createAccountCToken(
-  cTokenStatsID: string,
+export function createAccountSToken(
+  sTokenStatsID: string,
   symbol: string,
   account: string,
   marketID: string,
-): AccountCToken {
-  let cTokenStats = new AccountCToken(cTokenStatsID)
-  cTokenStats.symbol = symbol
-  cTokenStats.market = marketID
-  cTokenStats.account = account
-  cTokenStats.accrualBlockNumber = BigInt.fromI32(0)
-  cTokenStats.cTokenBalance = zeroBD
-  cTokenStats.totalUnderlyingSupplied = zeroBD
-  cTokenStats.totalUnderlyingRedeemed = zeroBD
-  cTokenStats.accountBorrowIndex = zeroBD
-  cTokenStats.totalUnderlyingBorrowed = zeroBD
-  cTokenStats.totalUnderlyingRepaid = zeroBD
-  cTokenStats.storedBorrowBalance = zeroBD
-  cTokenStats.enteredMarket = false
-  return cTokenStats
+): AccountSToken {
+  let sTokenStats = new AccountSToken(sTokenStatsID)
+  sTokenStats.symbol = symbol
+  sTokenStats.market = marketID
+  sTokenStats.account = account
+  sTokenStats.accrualBlockNumber = BigInt.fromI32(0)
+  sTokenStats.sTokenBalance = zeroBD
+  sTokenStats.totalUnderlyingSupplied = zeroBD
+  sTokenStats.totalUnderlyingRedeemed = zeroBD
+  sTokenStats.accountBorrowIndex = zeroBD
+  sTokenStats.totalUnderlyingBorrowed = zeroBD
+  sTokenStats.totalUnderlyingRepaid = zeroBD
+  sTokenStats.storedBorrowBalance = zeroBD
+  sTokenStats.enteredMarket = false
+  return sTokenStats
 }
 
 export function createAccount(accountID: string): Account {
@@ -49,7 +49,7 @@ export function createAccount(accountID: string): Account {
   return account
 }
 
-export function updateCommonCTokenStats(
+export function updateCommonSTokenStats(
   marketID: string,
   marketSymbol: string,
   accountID: string,
@@ -57,39 +57,39 @@ export function updateCommonCTokenStats(
   timestamp: BigInt,
   blockNumber: BigInt,
   logIndex: BigInt,
-): AccountCToken {
-  let cTokenStatsID = marketID.concat('-').concat(accountID)
-  let cTokenStats = AccountCToken.load(cTokenStatsID)
-  if (cTokenStats == null) {
-    cTokenStats = createAccountCToken(cTokenStatsID, marketSymbol, accountID, marketID)
+): AccountSToken {
+  let sTokenStatsID = marketID.concat('-').concat(accountID)
+  let sTokenStats = AccountSToken.load(sTokenStatsID)
+  if (sTokenStats == null) {
+    sTokenStats = createAccountSToken(sTokenStatsID, marketSymbol, accountID, marketID)
   }
-  getOrCreateAccountCTokenTransaction(
-    cTokenStatsID,
+  getOrCreateAccountSTokenTransaction(
+    sTokenStatsID,
     tx_hash,
     timestamp,
     blockNumber,
     logIndex,
   )
-  cTokenStats.accrualBlockNumber = blockNumber
-  return cTokenStats as AccountCToken
+  sTokenStats.accrualBlockNumber = blockNumber
+  return sTokenStats as AccountSToken
 }
 
-export function getOrCreateAccountCTokenTransaction(
+export function getOrCreateAccountSTokenTransaction(
   accountID: string,
   tx_hash: Bytes,
   timestamp: BigInt,
   block: BigInt,
   logIndex: BigInt,
-): AccountCTokenTransaction {
+): AccountSTokenTransaction {
   let id = accountID
     .concat('-')
     .concat(tx_hash.toHexString())
     .concat('-')
     .concat(logIndex.toString())
-  let transaction = AccountCTokenTransaction.load(id)
+  let transaction = AccountSTokenTransaction.load(id)
 
   if (transaction == null) {
-    transaction = new AccountCTokenTransaction(id)
+    transaction = new AccountSTokenTransaction(id)
     transaction.account = accountID
     transaction.tx_hash = tx_hash
     transaction.timestamp = timestamp
@@ -98,5 +98,5 @@ export function getOrCreateAccountCTokenTransaction(
     transaction.save()
   }
 
-  return transaction as AccountCTokenTransaction
+  return transaction as AccountSTokenTransaction
 }

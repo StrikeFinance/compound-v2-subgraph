@@ -15,33 +15,33 @@ type Comptroller @entity {
 }
 
 """
-Market stores all high level variables for a cToken market
+Market stores all high level variables for a sToken market
 """
 type Market @entity {
     #Fields that match compounds API
     "Yearly borrow rate. With 2102400 blocks per year"
     borrowRate: BigDecimal!
-    "The cToken contract balance of ERC20 or ETH"
+    "The sToken contract balance of ERC20 or ETH"
     cash: BigDecimal!
     "Collateral factor determining how much one can borrow"
     collateralFactor: BigDecimal!
-    "Exchange rate of tokens / cTokens"
+    "Exchange rate of tokens / sTokens"
     exchangeRate:  BigDecimal!
     "Address of the interest rate model"
     interestRateModelAddress: Bytes!
-    "Name of the cToken"
+    "Name of the sToken"
     name: String!
     "Reserves stored in the contract"
     reserves: BigDecimal!
     "Yearly supply rate. With 2104400 blocks per year"
     supplyRate: BigDecimal!
-    "CToken symbol"
+    "SToken symbol"
     symbol: String!
-    "CToken address"
+    "SToken address"
     id: ID!
     "Borrows in the market"
     totalBorrows: BigDecimal!
-    "CToken supply. CTokens have 8 decimals"
+    "SToken supply. STokens have 8 decimals"
     totalSupply: BigDecimal!
     "Underlying token address"
     underlyingAddress: Bytes!
@@ -68,14 +68,14 @@ type Market @entity {
 }
 
 """
-Account is an ETH address, with a list of all cToken markets the account has
+Account is an ETH address, with a list of all sToken markets the account has
 participated in, along with liquidation information.
 """
 type Account @entity {
     "User ETH address"
     id: ID!
-    "Array of CTokens user is in"
-    tokens: [AccountCToken!]! @derivedFrom(field: "account")
+    "Array of STokens user is in"
+    tokens: [AccountSToken!]! @derivedFrom(field: "account")
     "Count user has been liquidated"
     countLiquidated: Int!
     "Count user has liquidated others"
@@ -96,27 +96,27 @@ type Account @entity {
 }
 
 """
-AccountCToken is a single account within a single cToken market, with data such
+AccountSToken is a single account within a single sToken market, with data such
 as interest earned or paid
 """
-type AccountCToken @entity {
-    "Concatenation of CToken address and user address"
+type AccountSToken @entity {
+    "Concatenation of SToken address and user address"
     id: ID!
     "Relation to market"
     market: Market!
-    "Symbol of the cToken"
+    "Symbol of the sToken"
     symbol: String!
     "Relation to user"
     account: Account!
     "Transactions data"
-    transactions: [AccountCTokenTransaction!]! @derivedFrom(field:"account")
+    transactions: [AccountSTokenTransaction!]! @derivedFrom(field:"account")
     "Block number this asset was updated at in the contract"
     accrualBlockNumber: BigInt!
     "True if user is entered, false if they are exited"
     enteredMarket: Boolean!
 
-    "CToken balance of the user"
-    cTokenBalance: BigDecimal!
+    "SToken balance of the user"
+    sTokenBalance: BigDecimal!
     "Total amount of underlying supplied"
     totalUnderlyingSupplied: BigDecimal!
     "Total amount of underling redeemed"
@@ -135,7 +135,7 @@ type AccountCToken @entity {
     # They do not need to be in the schema, but they will show up in the explorer playground
 
     # supplyBalanceUnderlying: BigDecimal!
-    # FORMULA: supplyBalanceUnderlying = cTokenBalance * market.exchangeRate
+    # FORMULA: supplyBalanceUnderlying = sTokenBalance * market.exchangeRate
 
     # lifetimeSupplyInterestAccrued: BigDecimal!
     # FORMULA: lifetimeSupplyInterestAccrued = supplyBalanceUnderlying - totalUnderlyingSupplied + totalUnderlyingRedeemed
@@ -148,12 +148,12 @@ type AccountCToken @entity {
 }
 
 """
-Auxiliary entity for AccountCToken
+Auxiliary entity for AccountSToken
 """
-type AccountCTokenTransaction @entity {
+type AccountSTokenTransaction @entity {
   id: ID!
 
-  account: AccountCToken!
+  account: AccountSToken!
 
   tx_hash: Bytes!
 
@@ -165,13 +165,13 @@ type AccountCTokenTransaction @entity {
 }
 
 """
-An interface for a transfer of any cToken. TransferEvent, MintEvent,
+An interface for a transfer of any sToken. TransferEvent, MintEvent,
 RedeemEvent, and LiquidationEvent all use this interface
 """
-interface CTokenTransfer {
+interface STokenTransfer {
     "Transaction hash concatenated with log index"
     id: ID!
-    "cTokens transferred"
+    "sTokens transferred"
     amount: BigDecimal!
     "Account that received tokens"
     to: Bytes!
@@ -181,18 +181,18 @@ interface CTokenTransfer {
     blockNumber: Int!
     "Block time"
     blockTime: Int!
-    "Symbol of the cToken transferred"
-    cTokenSymbol: String!
+    "Symbol of the sToken transferred"
+    sTokenSymbol: String!
 }
 
 """
 TransferEvent will be stored for every mint, redeem, liquidation, and any normal
 transfer between two accounts.
 """
-type TransferEvent implements CTokenTransfer @entity {
+type TransferEvent implements STokenTransfer @entity {
     "Transaction hash concatenated with log index"
     id: ID!
-    "cTokens transferred"
+    "sTokens transferred"
     amount: BigDecimal!
     "Account that received tokens"
     to: Bytes!
@@ -202,43 +202,43 @@ type TransferEvent implements CTokenTransfer @entity {
     blockNumber: Int!
     "Block time"
     blockTime: Int!
-    "Symbol of the cToken transferred"
-    cTokenSymbol: String!
+    "Symbol of the sToken transferred"
+    sTokenSymbol: String!
 }
 
 """
-MintEvent stores information for mints. From address will always be a cToken
+MintEvent stores information for mints. From address will always be a sToken
 market address
 """
-type MintEvent implements CTokenTransfer @entity {
+type MintEvent implements STokenTransfer @entity {
     "Transaction hash concatenated with log index"
     id: ID!
-    "cTokens transferred"
+    "sTokens transferred"
     amount: BigDecimal!
     "Account that received tokens (minter)"
     to: Bytes!
-    "Account that sent tokens (CToken contract)"
+    "Account that sent tokens (SToken contract)"
     from: Bytes!
     "Block number"
     blockNumber: Int!
     "Block time"
     blockTime: Int!
-    "Symbol of the cToken transferred"
-    cTokenSymbol: String!
+    "Symbol of the sToken transferred"
+    sTokenSymbol: String!
     "Underlying token amount transferred"
     underlyingAmount: BigDecimal
 }
 
 """
 RedeemEvent stores information for redeems. To address will always be a
-cToken market address
+sToken market address
 """
-type RedeemEvent implements CTokenTransfer @entity {
+type RedeemEvent implements STokenTransfer @entity {
     "Transaction hash concatenated with log index"
     id: ID!
-    "cTokens transferred"
+    "sTokens transferred"
     amount: BigDecimal!
-    "Account that received tokens (CToken contract)"
+    "Account that received tokens (SToken contract)"
     to: Bytes!
     "Account that sent tokens (redeemer)"
     from: Bytes!
@@ -246,20 +246,20 @@ type RedeemEvent implements CTokenTransfer @entity {
     blockNumber: Int!
     "Block time"
     blockTime: Int!
-    "Symbol of the cToken transferred"
-    cTokenSymbol: String!
+    "Symbol of the sToken transferred"
+    sTokenSymbol: String!
     "Underlying token amount transferred"
     underlyingAmount: BigDecimal
 }
 
 """
 LiquidationEvent stores information for liquidations. The event is emitted from
-the cToken market address.
+the sToken market address.
 """
-type LiquidationEvent implements CTokenTransfer @entity {
+type LiquidationEvent implements STokenTransfer @entity {
     "Transaction hash concatenated with log index"
     id: ID!
-    "cTokens seized"
+    "sTokens seized"
     amount: BigDecimal!
     "Liquidator receiving tokens"
     to: Bytes!
@@ -269,11 +269,11 @@ type LiquidationEvent implements CTokenTransfer @entity {
     blockNumber: Int!
     "Block time"
     blockTime: Int!
-    "cToken that was sezied as collateral"
-    cTokenSymbol: String!
+    "sToken that was sezied as collateral"
+    sTokenSymbol: String!
     "Symbol of the underlying asset repaid through liquidation"
     underlyingSymbol: String!
-    "Underlying cToken amount that was repaid by liquidator"
+    "Underlying sToken amount that was repaid by liquidator"
     underlyingRepayAmount: BigDecimal!
 }
 
