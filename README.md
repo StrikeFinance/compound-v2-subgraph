@@ -1,6 +1,6 @@
 # Strike-Subgraph
 
-[Compound](https://strike.org/) is an open-source protocol for algorithmic, efficient Money Markets on the Ethereum blockchain. This Subgraph ingests the V2 contracts of the protocol.
+[Strike](https://strike.org/) is an open-source protocol for algorithmic, efficient Money Markets on the Ethereum blockchain. This Subgraph ingests the V2 contracts of the protocol.
 
 ## Networks and Performance
 
