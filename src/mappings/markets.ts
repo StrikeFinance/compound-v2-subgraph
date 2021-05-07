@@ -15,8 +15,8 @@ import {
   zeroBD,
 } from './helpers'
 
-let sUSDCAddress = '0x3774e825d567125988fb293e926064b6faa71dab'
-let sETHAddress = '0xbee9cf658702527b0acb2719c1faa29edc006a92'
+let sUSDCAddress = '0x714c01a7cdaadb8cd3da3d43039c2b4d31335dc1'
+let sETHAddress = '0x9898d542feb256a076876007c4db552f71b0cdac'
 let daiAddress = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'
 
 // Used for all sERC20 contracts

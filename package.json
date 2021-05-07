@@ -6,10 +6,10 @@
   "scripts": {
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build --ipfs https://api.staging.thegraph.com/ipfs/ ",
-    "create-local": "graph create strikefinance/strike-subgraph --node http://127.0.0.1:8020",
-    "deploy-local": "graph deploy strikefinance/strike-subgraph --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020/",
-    "deploy": "graph deploy strikefinance/strike-subgraph --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-staging": "graph deploy --debug --ipfs https://api.staging.thegraph.com/ipfs/ --node https://api.staging.thegraph.com/deploy/ strikefinance/strike-subgraph",
+    "create-local": "graph create strikefinance/strike-ropsten-subgraph --node http://127.0.0.1:8020",
+    "deploy-local": "graph deploy strikefinance/strike-ropsten-subgraph --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020/",
+    "deploy": "graph deploy strikefinance/strike-ropsten-subgraph --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-staging": "graph deploy --debug --ipfs https://api.staging.thegraph.com/ipfs/ --node https://api.staging.thegraph.com/deploy/ strikefinance/strike-ropsten-subgraph",
     "prettier": "./node_modules/.bin/prettier —-write '**/*.ts'"
   },
   "devDependencies": {
